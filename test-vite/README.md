@@ -10,16 +10,3 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-## Configuración de variables de entorno
-
-1. Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
-
-```
-VITE_API_URL=http://localhost:3000
-VITE_GOOGLE_MAPS_API_KEY=tu_token_de_google_maps
-```
-
-2. Usa estas variables en el código con `import.meta.env.VITE_API_URL` y `import.meta.env.VITE_GOOGLE_MAPS_API_KEY`.
-
-3. Reinicia el servidor de desarrollo después de modificar el `.env`.
