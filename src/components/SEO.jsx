@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 export default function SEO({ 
   title = "BlintAI - Encuentra lugares ideales con Inteligencia Artificial",
