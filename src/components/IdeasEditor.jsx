@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default function IdeasEditor({ location, ideas, setIdeas, onBack, onNext }) {
   const [input, setInput] = useState('');
@@ -11,7 +13,7 @@ export default function IdeasEditor({ location, ideas, setIdeas, onBack, onNext 
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post(`/api/blint/extract-ideas`, { text: input });
+      const res = await axios.post(`${process.env.VITE_API_URL}/api/blint/extract-ideas`, { text: input });
       // Suponemos que la API devuelve ideas como string separadas por salto de línea o array
       let extracted = res.data.ideas;
       if (typeof extracted === 'string') {
