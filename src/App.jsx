@@ -81,7 +81,17 @@ function Home() {
             <MapSelector location={location} setLocation={setLocation} onNext={() => setStep(2)} />
           )}
           {step === 2 && (
-            <IdeasEditor location={location} ideas={ideas} setIdeas={setIdeas} onBack={() => setStep(1)} onNext={() => setStep(3)} />
+            <IdeasEditor 
+              location={location} 
+              ideas={ideas} 
+              setIdeas={(newIdeas) => {
+                setIdeas(newIdeas);
+                // Limpiar resultados cuando cambian las ideas
+                setResults([]);
+              }} 
+              onBack={() => setStep(1)} 
+              onNext={() => setStep(3)} 
+            />
           )}
           {step === 3 && (
             <Results location={location} ideas={ideas} results={results} setResults={setResults} onBack={() => setStep(2)} />

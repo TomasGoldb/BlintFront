@@ -8,7 +8,7 @@ function StarRating({ rating }) {
   const fullStars = Math.floor(rating);
   const halfStar = rating - fullStars >= 0.5;
   return (
-    <span style={{ color: '#FFD700', fontSize: 20, marginLeft: 4 }}>
+    <span style={{ color: '#FFD700', fontSize: 18, marginLeft: 4 }}>
       {'★'.repeat(fullStars)}{halfStar ? '½' : ''}
     </span>
   );
@@ -20,19 +20,22 @@ export default function Results({ location, ideas, results, setResults, onBack }
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    if (!results.length && location && ideas.length) {
-      buscarLugares();
-    } else if (results.length) {
-      fetchDetails(results);
+    if (location && ideas.length) {
+      if (!results.length) {
+        buscarLugares();
+      } else {
+        fetchDetails(results);
+      }
     }
     // eslint-disable-next-line
-  }, []);
+    console.log("ideas", ideas);
+  }, [ideas, location, results.length]);
 
   const buscarLugares = async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/find-places`, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/blint/find-places`, {
         ideas,
         lat: location.lat,
         lng: location.lng,
@@ -52,7 +55,7 @@ export default function Results({ location, ideas, results, setResults, onBack }
     try {
       const details = await Promise.all(
         ids.map(async (placeId) => {
-          const url = `${import.meta.env.VITE_API_URL}/place-details?place_id=${placeId}`;
+          const url = `${import.meta.env.VITE_API_URL}/api/blint/place-details?place_id=${placeId}`;
           const res = await axios.get(url);
           const p = res.data;
           return {
@@ -76,58 +79,108 @@ export default function Results({ location, ideas, results, setResults, onBack }
 
   return (
     <div style={{ position: 'relative', zIndex: 1 }}>
-      <button onClick={onBack} style={{ position: 'absolute', left: 18, top: 18, background: 'none', border: 'none', color: 'var(--primary-blue)', fontWeight: 700, fontSize: 28, cursor: 'pointer', borderRadius: 16, padding: '2px 14px', boxShadow: '0 1px 6px #2563eb11', zIndex: 2, transition: 'background 0.2s' }} title="Volver">
-        ←
-      </button>
-      <div style={{ marginBottom: 24, fontWeight: 700, fontSize: 22, color: 'var(--primary-blue)', textShadow: '0 2px 12px #2563eb22' }}>Lugares sugeridos cerca de tu ubicación:</div>
+      <button onClick={onBack} style={{ 
+        position: 'absolute', 
+        left: 0, 
+        top: -10, 
+        background: 'rgba(37,99,235,0.1)', 
+        border: 'none', 
+        color: 'var(--primary-blue)', 
+        fontWeight: 700, 
+        fontSize: 16, 
+        cursor: 'pointer', 
+        borderRadius: 12, 
+        padding: '8px 16px', 
+        boxShadow: '0 2px 8px rgba(37, 99, 235, 0.15)',
+        transition: 'all 0.2s ease',
+        zIndex: 2
+      }} title="Volver">← Atrás</button>
+      <div style={{ marginTop: 40, marginBottom: 24, fontWeight: 700, fontSize: 22, color: 'var(--primary-blue)', textShadow: '0 2px 12px #2563eb22' }}>Lugares sugeridos cerca de tu ubicación:</div>
       {loading && <div style={{ color: 'var(--primary-blue)', fontWeight: 600, fontSize: 18, margin: '32px 0' }}>Buscando lugares mágicos...</div>}
       {error && <div style={{ color: 'red', fontWeight: 600, margin: '16px 0' }}>{error}</div>}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
         {places.map((place, idx) => (
           <div key={place.id} style={{
-            background: 'linear-gradient(120deg, #fff6e5 0%, #e0e7ff 100%)',
-            border: '1.5px solid #e0e7ff',
+            background: '#ffffff',
+            border: '2px solid #e2e8f0',
             borderRadius: 'var(--radius-xl)',
-            boxShadow: '0 8px 32px #2563eb22, 0 2px 12px #ff7e1b22',
+            boxShadow: '0 8px 32px rgba(37, 99, 235, 0.12), 0 4px 16px rgba(255, 126, 27, 0.08)',
             padding: 0,
             textAlign: 'left',
             position: 'relative',
             overflow: 'hidden',
-            minHeight: 180,
+            maxWidth: 420,
+            margin: '0 auto',
+            transition: 'all 0.3s ease',
             display: 'flex',
-            alignItems: 'stretch',
-            transition: 'box-shadow 0.2s',
+            flexDirection: 'column',
           }}>
-            {/* Glow */}
-            <div style={{ position: 'absolute', top: -40, left: -40, width: 120, height: 120, background: 'radial-gradient(circle, #2563eb22 0%, transparent 80%)', zIndex: 0, filter: 'blur(8px)' }} />
-            <div style={{ position: 'absolute', bottom: -40, right: -40, width: 120, height: 120, background: 'radial-gradient(circle, #ff7e1b22 0%, transparent 80%)', zIndex: 0, filter: 'blur(8px)' }} />
-            {place.photo && (
-              <img src={place.photo} alt={place.name} style={{ width: 160, height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-xl) 0 0 var(--radius-xl)', boxShadow: '0 2px 16px #2563eb22', background: '#e0e7ff' }} />
+            {place.photo ? (
+              <div style={{
+                width: '100%',
+                height: 170,
+                overflow: 'hidden',
+                borderTopLeftRadius: 'var(--radius-xl)',
+                borderTopRightRadius: 'var(--radius-xl)',
+                background: '#f1f5f9',
+              }}>
+                <img
+                  src={place.photo}
+                  alt={place.name}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block',
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = '<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 14px; font-weight: 600;">Sin imagen</div>';
+                  }}
+                />
+              </div>
+            ) : (
+              <div style={{
+                width: '100%',
+                height: 170,
+                background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+                borderTopLeftRadius: 'var(--radius-xl)',
+                borderTopRightRadius: 'var(--radius-xl)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#94a3b8',
+                fontSize: 14,
+                fontWeight: 600,
+              }}>
+                Sin imagen
+              </div>
             )}
-            <div style={{ flex: 1, padding: '28px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
-              <div style={{ color: 'var(--primary-blue)', fontWeight: 800, fontSize: 22, marginBottom: 6, letterSpacing: '0.01em', textShadow: '0 2px 12px #2563eb22' }}>{place.name}</div>
-              <div style={{ color: '#444', margin: '8px 0 10px', fontWeight: 500, fontSize: 16 }}>{place.address}</div>
+            <div style={{ padding: '28px 28px 22px 28px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+              <div style={{ color: '#1e293b', fontWeight: 800, fontSize: 22, marginBottom: 8, letterSpacing: '0.01em', lineHeight: 1.2 }}>{place.name}</div>
+              <div style={{ color: '#64748b', margin: '10px 0 14px', fontWeight: 500, fontSize: 15, lineHeight: 1.4 }}>{place.address}</div>
               {place.rating && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                  <span style={{ color: 'var(--accent-orange)', fontWeight: 700, fontSize: 16 }}>★</span>
-                  <span style={{ color: 'var(--accent-orange)', fontWeight: 700, fontSize: 16 }}>{place.rating}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                  <span style={{ color: '#ff7e1b', fontWeight: 700, fontSize: 17 }}>★</span>
+                  <span style={{ color: '#ff7e1b', fontWeight: 700, fontSize: 17 }}>{place.rating}</span>
                   <StarRating rating={place.rating} />
                 </div>
               )}
               <a href={place.url} target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-block',
-                background: 'linear-gradient(90deg, var(--accent-orange) 60%, var(--primary-blue) 100%)',
+                background: '#2563eb',
                 color: 'white',
                 fontWeight: 700,
-                fontSize: 17,
+                fontSize: 15,
                 borderRadius: 18,
                 padding: '10px 28px',
                 textDecoration: 'none',
-                boxShadow: '0 2px 12px #ff7e1b22',
+                boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
                 letterSpacing: '0.01em',
-                marginTop: 18,
-                transition: 'background 0.2s',
-                filter: 'drop-shadow(0 0 8px #2563eb33)',
+                marginTop: 16,
+                transition: 'all 0.2s ease',
+                alignSelf: 'flex-start',
               }}>Ver más en Maps</a>
             </div>
           </div>

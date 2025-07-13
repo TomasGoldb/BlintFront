@@ -5,13 +5,13 @@ const LIBRARIES = ['places'];
 
 const containerStyle = {
   width: '100%',
-  height: '300px',
-  borderRadius: 'var(--radius-lg)',
+  height: '400px',
+  borderRadius: 'var(--radius-xl)',
   marginBottom: 24,
-  boxShadow: 'var(--shadow)',
-  border: '1.5px solid #e0e7ff',
+  boxShadow: '0 4px 20px rgba(37, 99, 235, 0.15)',
+  border: '2px solid #e0e7ff',
   overflow: 'hidden',
-  background: 'var(--bg-glass)',
+  background: '#ffffff',
 };
 
 export default function MapSelector({ location, setLocation, onNext }) {
@@ -30,6 +30,48 @@ export default function MapSelector({ location, setLocation, onNext }) {
         types: ['geocode', 'establishment'],
         componentRestrictions: { country: 'ar' }, // Opcional: restringe a Argentina
       });
+      
+      // Agregar estilos personalizados al autocompletado
+      const style = document.createElement('style');
+      style.textContent = `
+        .pac-container {
+          border-radius: 12px !important;
+          border: 2px solid #e0e7ff !important;
+          box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15) !important;
+          background: #ffffff !important;
+          font-family: 'Poppins', sans-serif !important;
+          margin-top: 4px !important;
+        }
+        .pac-item {
+          padding: 12px 16px !important;
+          border: none !important;
+          border-bottom: 1px solid #f1f5f9 !important;
+          font-size: 14px !important;
+          color: #1e293b !important;
+          transition: background-color 0.2s ease !important;
+        }
+        .pac-item:hover {
+          background-color: #f8fafc !important;
+        }
+        .pac-item-selected {
+          background-color: #e0e7ff !important;
+          color: #2563eb !important;
+          font-weight: 600 !important;
+        }
+        .pac-item-query {
+          font-weight: 600 !important;
+          color: #1e293b !important;
+        }
+        .pac-item-query:before {
+          margin-right: 8px !important;
+        }
+        .pac-matched {
+          font-weight: 700 !important;
+          color: #2563eb !important;
+        }
+      `;
+      document.head.appendChild(style);
+      
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         if (place.geometry && place.geometry.location) {
@@ -78,13 +120,16 @@ export default function MapSelector({ location, setLocation, onNext }) {
               zoomControl: true,
               clickableIcons: false,
               styles: [
-                { elementType: 'geometry', stylers: [{ color: '#f7faff' }] },
-                { elementType: 'labels.text.fill', stylers: [{ color: '#2563eb' }] },
-                { elementType: 'labels.text.stroke', stylers: [{ color: '#fff' }] },
+                { elementType: 'geometry', stylers: [{ color: '#f8fafc' }] },
+                { elementType: 'labels.text.fill', stylers: [{ color: '#475569' }] },
+                { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
                 { featureType: 'poi', stylers: [{ visibility: 'off' }] },
                 { featureType: 'transit', stylers: [{ visibility: 'off' }] },
-                { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#e0e7ff' }] },
-                { featureType: 'water', stylers: [{ color: '#dbeafe' }] },
+                { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#e2e8f0' }] },
+                { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#ffffff' }] },
+                { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#475569' }] },
+                { featureType: 'water', stylers: [{ color: '#e0f2fe' }] },
+                { featureType: 'landscape', stylers: [{ color: '#f8fafc' }] },
               ],
             }}
           >
@@ -92,8 +137,13 @@ export default function MapSelector({ location, setLocation, onNext }) {
               <Marker
                 position={location}
                 icon={{
-                  url: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2.png',
-                  scaledSize: { width: 36, height: 36 },
+                  path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+                  fillColor: '#2563eb',
+                  fillOpacity: 1,
+                  strokeColor: '#ffffff',
+                  strokeWeight: 2,
+                  scale: 1.5,
+                  anchor: { x: 12, y: 24 },
                 }}
               />
             )}
@@ -105,7 +155,7 @@ export default function MapSelector({ location, setLocation, onNext }) {
       <button
         style={{
           marginTop: 24,
-          background: 'linear-gradient(90deg, var(--primary-blue) 60%, var(--accent-orange) 100%)',
+          background: location ? '#2563eb' : '#94a3b8',
           color: 'white',
           border: 'none',
           borderRadius: 'var(--radius-lg)',
@@ -113,10 +163,10 @@ export default function MapSelector({ location, setLocation, onNext }) {
           fontWeight: 700,
           fontSize: 18,
           cursor: location ? 'pointer' : 'not-allowed',
-          opacity: location ? 1 : 0.5,
-          boxShadow: '0 2px 16px #2563eb22',
+          opacity: location ? 1 : 0.6,
+          boxShadow: location ? '0 4px 16px rgba(37, 99, 235, 0.3)' : '0 2px 8px rgba(148, 163, 184, 0.2)',
           letterSpacing: '0.01em',
-          transition: 'background 0.2s',
+          transition: 'all 0.2s ease',
         }}
         disabled={!location}
         onClick={onNext}
