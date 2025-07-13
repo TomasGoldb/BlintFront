@@ -7,12 +7,12 @@ export default function IdeasEditor({ location, ideas, setIdeas, onBack, onNext 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [newIdea, setNewIdea] = useState('');
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const handleExtract = async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post(`${VITE_API_URL}/api/blint/extract-ideas`, { text: input });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/blint/extract-ideas`, { text: input });
       // Suponemos que la API devuelve ideas como string separadas por salto de línea o array
       let extracted = res.data.ideas;
       if (typeof extracted === 'string') {
