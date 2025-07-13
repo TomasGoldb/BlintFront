@@ -1,13 +1,112 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>BlintAI - Encuentra lugares ideales con Inteligencia Artificial</title>
+    <meta name="description" content="Descubre los mejores lugares cerca de ti usando IA. Selecciona tu ubicación, describe tus intereses y encuentra restaurantes, cafés, parques y más lugares perfectos para ti." />
+    <meta name="keywords" content="IA, inteligencia artificial, lugares, restaurantes, cafés, parques, búsqueda de lugares, recomendaciones, ubicación, mapas, Google Maps" />
+    <meta name="author" content="BlintAI" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://blintapp.vercel.app" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blintapp.vercel.app" />
+    <meta property="og:title" content="BlintAI - Encuentra lugares ideales con Inteligencia Artificial" />
+    <meta property="og:description" content="Descubre los mejores lugares cerca de ti usando IA. Selecciona tu ubicación, describe tus intereses y encuentra restaurantes, cafés, parques y más lugares perfectos para ti." />
+    <meta property="og:image" content="https://blintapp.vercel.app/logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="BlintAI" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://blintapp.vercel.app" />
+    <meta property="twitter:title" content="BlintAI - Encuentra lugares ideales con Inteligencia Artificial" />
+    <meta property="twitter:description" content="Descubre los mejores lugares cerca de ti usando IA. Selecciona tu ubicación, describe tus intereses y encuentra restaurantes, cafés, parques y más lugares perfectos para ti." />
+    <meta property="twitter:image" content="https://blintapp.vercel.app/logo.png" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BlintAI" />
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BlintAI",
+      "description": "Aplicación web que utiliza inteligencia artificial para encontrar lugares ideales cerca del usuario basándose en sus intereses y ubicación.",
+      "url": "https://blintapp.vercel.app",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "BlintAI"
+      },
+      "featureList": [
+        "Búsqueda de lugares con IA",
+        "Recomendaciones personalizadas",
+        "Integración con Google Maps",
+        "Análisis de intereses del usuario"
+      ]
+    }
+    </script>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://maps.googleapis.com" />
+    <link rel="preconnect" href="https://juntifyback-production.up.railway.app" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon-simple.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/logo.png" />
+    <link rel="shortcut icon" href="/favicon-simple.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Google Analytics (opcional) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
   </body>
 </html>
