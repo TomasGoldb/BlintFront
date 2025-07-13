@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function StarRating({ rating }) {
   // Redondea a la media estrella más cercana
@@ -35,7 +36,7 @@ export default function Results({ location, ideas, results, setResults, onBack }
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/blint/find-places`, {
+      const res = await axios.post(`${API_URL}/api/blint/find-places`, {
         ideas,
         lat: location.lat,
         lng: location.lng,
@@ -55,7 +56,7 @@ export default function Results({ location, ideas, results, setResults, onBack }
     try {
       const details = await Promise.all(
         ids.map(async (placeId) => {
-          const url = `${import.meta.env.VITE_API_URL}/api/blint/place-details?place_id=${placeId}`;
+          const url = `${API_URL}/api/blint/place-details?place_id=${placeId}`;
           const res = await axios.get(url);
           const p = res.data;
           return {
